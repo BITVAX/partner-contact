@@ -189,6 +189,9 @@ class ResPartner(models.Model):
     def _inverse_name(self):
         """Try to revert the effect of :meth:`._compute_name`."""
         for record in self:
+            if (record.firstname and record.firstname in record.name
+                and record.lastname and record.lastname in record.name):
+                continue
             parts = record._get_inverse_name(record.name, record.is_company)
             record.lastname = parts['lastname']
             record.firstname = parts['firstname']
